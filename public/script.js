@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const owner = "SugarHyou";
         const repo = "sugarhyperdose-v2";
-        const path = "admin.json";
+        const path = "public/admin.json";
         const branch = "main";
 
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/public/${path}`;
