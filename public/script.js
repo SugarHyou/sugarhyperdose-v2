@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const path = "admin.json";
         const branch = "main";
 
-        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/public/${path}`;
 
         try {
             let posts = [];
