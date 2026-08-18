@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ADMIN.EXE</title>
+    <meta name="description" content="I’m obsessed with sweets to a probably-unhealthy degree!">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="assets/graphics/favicons/X.gif" type="image/x-icon">
+    <link rel="stylesheet" href="stylesheet.css">
+    <style>
+        .admin-input, .admin-textarea {
+            width: 100%;
+            font-family: inherit;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            padding: 8px;
+            border: 2px inset var(--purple);
+            background: white;
+            color: var(--black);
+        }
+        .admin-textarea {
+            height: 120px;
+            resize: vertical;
+        }
+    </style>
+</head>
+
+<body class="flex wrap">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="center-container" class="flex justify-center align-center wrap" style="width: 100%;">
+        <div class="admin-window window">
+            <div class="title-bar flex">
+                <span>ADMIN.EXE - Post Creator</span>
+                <div class="title-bar-controls flex">
+                    <span class="maximize flex justify-center align-center">🗖</span>
+                    <span class="close flex justify-center align-center">X</span>
+                </div>
+            </div>
+            <div class="admin-body">
+                <label style="color: var(--purple); font-weight: bold;">Post Title:</label>
+                <input type="text" id="post-title" class="admin-input" placeholder="What's on your mind?">
+
+                <label style="color: var(--purple); font-weight: bold;">Post Content (HTML allowed):</label>
+                <textarea id="post-content" class="admin-textarea" placeholder="Type your blog post here..."></textarea>
+
+                <button id="publish-btn" class="player-btn" style="width: 100%; padding: 10px; cursor: pointer;">Publish</button>
+                <div id="status-msg" style="margin-top: 10px; font-size: 14px; text-align: center;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" async defer></script>
+</body>
+
+</html>

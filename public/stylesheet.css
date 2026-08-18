@@ -151,7 +151,8 @@ img {
     padding: 2px;
 }
 
-.title-bar-controls {
+.title-bar-controls,
+.player-controls {
     gap: 5px;
 }
 
@@ -173,7 +174,8 @@ img {
 }
 
 .title-bar-controls span.maximize:hover,
-.title-bar-controls span.close:hover {
+.title-bar-controls span.close:hover,
+.player-btn:hover {
     background: var(--cyan);
     cursor: pointer;
 }
@@ -197,22 +199,13 @@ img {
     cursor: pointer;
 }
 
-.player-controls {
-    gap: 8px;
-}
-
 .player-btn {
     background: var(--white);
-    border: 2px outset var(--purple);
-    font-family: 'Main';
-    font-size: 14px;
+    border: 2px solid var(--purple);
+    font-family: inherit;
     padding: 4px 8px;
     cursor: pointer;
     color: var(--purple);
-}
-
-.player-btn:active {
-    border-style: inset;
 }
 
 .player-btn.active {

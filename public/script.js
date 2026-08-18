@@ -123,3 +123,91 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadTrack(currentTrackIndex);
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const publishBtn = document.getElementById("publish-btn");
+    if (!publishBtn) return;
+
+    publishBtn.addEventListener("click", async () => {
+        const title = document.getElementById("post-title").value.trim();
+        const content = document.getElementById("post-content").value.trim();
+        const statusMsg = document.getElementById("status-msg");
+
+        if (!title || !content) {
+            statusMsg.style.color = "red";
+            statusMsg.textContent = "Error: Fill out both title and content!";
+            return;
+        }
+
+        const token = prompt("Enter your GitHub Personal Access Token:");
+        if (!token) return;
+
+        statusMsg.style.color = "var(--purple)";
+        statusMsg.textContent = "Publishing to GitHub...";
+
+        const owner = "SugarHyou";
+        const repo = "sugarhyperdose-v2";
+        const path = "admin.json";
+        const branch = "main";
+
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+        try {
+            let posts = [];
+            let sha = null;
+
+            const getRes = await fetch(apiUrl, {
+                headers: { "Authorization": `token ${token}` }
+            });
+
+            if (getRes.ok) {
+                const fileData = await getRes.json();
+                sha = fileData.sha;
+                const decodedContent = decodeURIComponent(escape(atob(fileData.content)));
+                posts = JSON.parse(decodedContent);
+            }
+
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' – ' + 
+                            now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            const newPost = {
+                title: title,
+                date: dateStr,
+                content: content
+            };
+
+            posts.unshift(newPost);
+
+            const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify(posts, null, 2))));
+
+            const putRes = await fetch(apiUrl, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: `New blog post: ${title}`,
+                    content: updatedContent,
+                    sha: sha,
+                    branch: branch
+                })
+            });
+
+            if (putRes.ok) {
+                statusMsg.style.color = "limegreen";
+                statusMsg.textContent = "Success! Post published live!";
+                document.getElementById("post-title").value = "";
+                document.getElementById("post-content").value = "";
+            } else {
+                const errData = await putRes.json();
+                throw new Error(errData.message || "Failed to push to GitHub");
+            }
+
+        } catch (err) {
+            statusMsg.style.color = "red";
+            statusMsg.textContent = "Error: " + err.message;
+        }
+    });
+});
