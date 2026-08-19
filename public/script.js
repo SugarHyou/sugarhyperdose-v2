@@ -1,4 +1,3 @@
-// --- 1. MUSIC PLAYER LOGIC ---
 document.addEventListener("DOMContentLoaded", () => {
     const playBtn = document.getElementById("play-btn");
 
@@ -103,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// --- 2. ADMIN TABS LOGIC ---
 document.addEventListener("DOMContentLoaded", () => {
     const tabBlogBtn = document.getElementById("tab-blog-btn");
     const tabStatusBtn = document.getElementById("tab-status-btn");
@@ -127,7 +125,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// --- 3. GITHUB PUBLISH BLOG POST ---
+function getGitHubToken() {
+    let token = localStorage.getItem("github_token");
+    if (!token) {
+        token = prompt("I've Got No Happy Place!");
+        if (token) {
+            localStorage.setItem("github_token", token.trim());
+        }
+    }
+    return token;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const publishBtn = document.getElementById("publish-btn");
     if (!publishBtn) return;
@@ -143,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const token = prompt("Enter your GitHub Personal Access Token:");
+        const token = getGitHubToken();
         if (!token) return;
 
         statusMsg.style.color = "var(--purple)";
@@ -151,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const owner = "SugarHyou";
         const repo = "sugarhyperdose-v2";
-        const path = "public/admin.json"; // FIXED PATH
+        const path = "public/admin.json";
         const branch = "main";
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
@@ -162,6 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const getRes = await fetch(apiUrl, {
                 headers: { "Authorization": `token ${token}` }
             });
+
+            if (getRes.status === 401) {
+                localStorage.removeItem("github_token");
+                throw new Error("Invalid or expired token. Please try again.");
+            }
 
             if (getRes.ok) {
                 const fileData = await getRes.json();
@@ -213,7 +226,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// --- 4. GITHUB UPDATE SITE STATUS ---
 document.addEventListener("DOMContentLoaded", () => {
     const saveStatusBtn = document.getElementById("save-status-btn");
     if (!saveStatusBtn) return;
@@ -222,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newStatus = document.getElementById("status-select").value;
         const statusMsg = document.getElementById("status-setting-msg");
 
-        const token = prompt("Enter your GitHub Personal Access Token:");
+        const token = getGitHubToken();
         if (!token) return;
 
         statusMsg.style.color = "var(--purple)";
@@ -230,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const owner = "SugarHyou";
         const repo = "sugarhyperdose-v2";
-        const path = "public/admin.json"; // FIXED PATH
+        const path = "public/admin.json";
         const branch = "main";
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
@@ -241,6 +253,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const getRes = await fetch(apiUrl, {
                 headers: { "Authorization": `token ${token}` }
             });
+
+            if (getRes.status === 401) {
+                localStorage.removeItem("github_token");
+                throw new Error("Invalid or expired token. Please try again.");
+            }
 
             if (getRes.ok) {
                 const fileData = await getRes.json();
@@ -286,14 +303,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-// --- 5. INDEX.HTML: LOAD BLOG FEED & STATUS ---
 document.addEventListener("DOMContentLoaded", () => {
     const blogFeed = document.getElementById("blog-feed");
     const onlineStatusSpan = document.getElementById("online-status");
 
     if (!blogFeed && !onlineStatusSpan) return;
 
-    fetch("public/admin.json") // FIXED PATH
+    fetch("admin.json")
         .then(response => {
             if (!response.ok) throw new Error("Could not load admin config.");
             return response.json();
@@ -315,8 +331,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     onlineStatusSpan.style.color = "var(--green)";
                 } else if (status === "OFFLINE") {
                     onlineStatusSpan.style.color = "red";
-                } else {
-                    onlineStatusSpan.style.color = "orange";
                 }
             }
 
