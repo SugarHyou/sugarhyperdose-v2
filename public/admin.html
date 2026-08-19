@@ -16,8 +16,7 @@
             margin-bottom: 15px;
             padding: 8px;
             border: 2px inset var(--purple);
-            background: white;
-            color: var(--black);
+            color: inherit;
         }
         .admin-textarea {
             height: 120px;
@@ -41,35 +40,30 @@
     <div id="center-container" class="flex justify-center align-center wrap" style="width: 100%;">
         <div class="admin-window window" style="width: 400px;">
             <div class="title-bar flex">
-                <span>ADMIN.EXE - Control Panel</span>
+                <span>Admin.exe</span>
                 <div class="title-bar-controls flex">
                     <span class="maximize flex justify-center align-center">🗖</span>
                     <span class="close flex justify-center align-center">X</span>
                 </div>
             </div>
             
-            <!-- Tab Navigation -->
             <div class="admin-tabs flex" style="margin-bottom: 15px; gap: 5px; padding: 5px;">
                 <button id="tab-blog-btn" class="player-btn tab-btn active">Blog Post</button>
                 <button id="tab-status-btn" class="player-btn tab-btn">Site Status</button>
             </div>
 
             <div class="admin-body">
-                <!-- TAB 1: BLOG POST CREATOR -->
                 <div id="tab-blog-content">
-                    <label style="color: var(--purple); font-weight: bold;">Post Title:</label>
+                    <label>Post Title:</label>
                     <input type="text" id="post-title" class="admin-input" placeholder="What's on your mind?">
-
-                    <label style="color: var(--purple); font-weight: bold;">Post Content (HTML allowed):</label>
+                    <label>Post Content (HTML allowed):</label>
                     <textarea id="post-content" class="admin-textarea" placeholder="Type your blog post here..."></textarea>
 
                     <button id="publish-btn" class="player-btn" style="width: 100%; padding: 10px; cursor: pointer;">Publish Post</button>
-                    <div id="status-msg" style="margin-top: 10px; font-size: 14px; text-align: center;"></div>
+                    <div id="status-msg" style="margin-top: 10px; text-align: center;"></div>
                 </div>
 
-                <!-- TAB 2: SITE STATUS CONFIG -->
                 <div id="tab-status-content" style="display: none;">
-                    <label style="color: var(--purple); font-weight: bold;">Select Status:</label>
                     <select id="status-select" class="admin-input">
                         <option value="ONLINE">● ONLINE</option>
                         <option value="OFFLINE">● OFFLINE</option>
