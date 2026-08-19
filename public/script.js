@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const owner = "SugarHyou";
         const repo = "sugarhyperdose-v2";
-        const path = "public/admin.json";
+        const path = "admin.json";
         const branch = "main";
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
@@ -288,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!blogFeed && !onlineStatusSpan) return;
 
-    fetch("public/admin.json")
+    fetch("admin.json")
         .then(response => {
             if (!response.ok) throw new Error("Could not load admin config.");
             return response.json();
