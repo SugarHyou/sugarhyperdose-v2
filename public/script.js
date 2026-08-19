@@ -323,21 +323,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 posts.forEach(post => {
-                    const postCard = document.createElement("div");
-                    postCard.className = "blog-post";
-                    postCard.style.cssText = "border: 2px inset var(--purple); background: white; padding: 10px; margin-bottom: 10px;";
+                const postCard = document.createElement("div");
+                postCard.className = "blog-post";
 
-                    postCard.innerHTML = `
-                        <div class="blog-header flex align-center" style="gap: 10px; margin-bottom: 8px; border-bottom: 1px dashed var(--purple); padding-bottom: 5px;">
-                            <img src="assets/art/Sugar-13-(Aug-5-2026).gif" alt="PFP" style="width: 32px; height: 32px; object-fit: cover; border: 1px solid var(--purple);">
-                            <div>
-                                <div style="font-weight: bold; color: var(--purple); font-size: 14px;">Sugar</div>
-                                <div style="font-size: 10px; color: gray;">${post.date}</div>
-                            </div>
+                postCard.innerHTML = `
+                    <div class="blog-header flex align-center" style="gap: 10px;">
+                        <img src="assets/art/Sugar-11-(Jul-25-2026).gif" alt="PFP" style="width: 40px; height: 40px; object-fit: cover; border: 1px solid var(--purple);">
+                        <div>
+                            <div style="font-weight: bold;">SugarHyperdose</div>
+                            <div style="font-size: 10px; color: gray;">${post.date}</div>
                         </div>
-                        <div class="blog-title" style="font-weight: bold; font-size: 15px; margin-bottom: 5px;">${post.title}</div>
-                        <div class="blog-text" style="font-size: 13px; word-break: break-word;">${post.content}</div>
-                    `;
+                    </div>
+                    <div class="blog-title" style="font-weight: bold; margin: 7px 0 2px;">${post.title}</div>
+                    <div class="blog-text" style="font-size: 14px;">${post.content}</div>
+                `;
                     blogFeed.appendChild(postCard);
                 });
             }
