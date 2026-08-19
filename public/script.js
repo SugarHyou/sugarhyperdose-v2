@@ -3,36 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (playBtn) {
         const playlist = [
-            {
-                title: "Chiwawa",
-                artist: "Wanko Ni Mero Mero",
-                src: "assets/audio/music/Chiwawa.mp3"
-            },
-            {
-                title: "edgy",
-                artist: "luvwillow",
-                src: "assets/audio/music/edgy.mp3"
-            },
-            {
-                title: "ELECTRIC WEEKEND ZONE",
-                artist: "FLAVOR FOLEY",
-                src: "assets/audio/music/ELECTRIC WEEKEND ZONE.mp3"
-            },
-            {
-                title: "INTERNET ANGEL",
-                artist: "Aiobahn +81 and NEEDY GIRL OVERDOSE",
-                src: "assets/audio/music/INTERNET ANGEL.mp3"
-            },
-            {
-                title: "Let's Go Gambling!",
-                artist: "FEM&M",
-                src: "assets/audio/music/Let's Go Gambling!.mp3"
-            },
-            {
-                title: "混沌ブギ 初音ミク",
-                artist: "Jon -YAKITORI",
-                src: "assets/audio/music/混沌ブギ 初音ミク.mp3"
-            },
+            { title: "Chiwawa", artist: "Wanko Ni Mero Mero", src: "assets/audio/music/Chiwawa.mp3" },
+            { title: "edgy", artist: "luvwillow", src: "assets/audio/music/edgy.mp3" },
+            { title: "ELECTRIC WEEKEND ZONE", artist: "FLAVOR FOLEY", src: "assets/audio/music/ELECTRIC WEEKEND ZONE.mp3" },
+            { title: "INTERNET ANGEL", artist: "Aiobahn +81 and NEEDY GIRL OVERDOSE", src: "assets/audio/music/INTERNET ANGEL.mp3" },
+            { title: "Let's Go Gambling!", artist: "FEM&M", src: "assets/audio/music/Let's Go Gambling!.mp3" },
+            { title: "混沌ブギ 初音ミク", artist: "Jon -YAKITORI", src: "assets/audio/music/混沌ブギ 初音ミク.mp3" },
         ];
 
         let currentTrackIndex = 0;
@@ -127,6 +103,29 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    const tabBlogBtn = document.getElementById("tab-blog-btn");
+    const tabStatusBtn = document.getElementById("tab-status-btn");
+    const tabBlogContent = document.getElementById("tab-blog-content");
+    const tabStatusContent = document.getElementById("tab-status-content");
+
+    if (tabBlogBtn && tabStatusBtn) {
+        tabBlogBtn.addEventListener("click", () => {
+            tabBlogContent.style.display = "block";
+            tabStatusContent.style.display = "none";
+            tabBlogBtn.classList.add("active");
+            tabStatusBtn.classList.remove("active");
+        });
+
+        tabStatusBtn.addEventListener("click", () => {
+            tabBlogContent.style.display = "none";
+            tabStatusContent.style.display = "block";
+            tabStatusBtn.classList.add("active");
+            tabBlogBtn.classList.remove("active");
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
     const publishBtn = document.getElementById("publish-btn");
     if (!publishBtn) return;
 
@@ -151,11 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const repo = "sugarhyperdose-v2";
         const path = "public/admin.json";
         const branch = "main";
-
         const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
         try {
-            let posts = [];
+            let siteData = { onlineStatus: "ONLINE", posts: [] };
             let sha = null;
 
             const getRes = await fetch(apiUrl, {
@@ -166,22 +164,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 const fileData = await getRes.json();
                 sha = fileData.sha;
                 const decodedContent = decodeURIComponent(escape(atob(fileData.content)));
-                posts = JSON.parse(decodedContent);
+                const parsed = JSON.parse(decodedContent);
+                if (Array.isArray(parsed)) {
+                    siteData.posts = parsed;
+                } else {
+                    siteData = parsed;
+                }
             }
 
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' – ' + 
                             now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
-            const newPost = {
-                title: title,
-                date: dateStr,
-                content: content
-            };
+            siteData.posts.unshift({ title, date: dateStr, content });
 
-            posts.unshift(newPost);
-
-            const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify(posts, null, 2))));
+            const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify(siteData, null, 2))));
 
             const putRes = await fetch(apiUrl, {
                 method: "PUT",
@@ -206,10 +203,147 @@ document.addEventListener("DOMContentLoaded", () => {
                 const errData = await putRes.json();
                 throw new Error(errData.message || "Failed to push to GitHub");
             }
-
         } catch (err) {
             statusMsg.style.color = "red";
             statusMsg.textContent = "Error: " + err.message;
         }
     });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const saveStatusBtn = document.getElementById("save-status-btn");
+    if (!saveStatusBtn) return;
+
+    saveStatusBtn.addEventListener("click", async () => {
+        const newStatus = document.getElementById("status-select").value;
+        const statusMsg = document.getElementById("status-setting-msg");
+
+        const token = prompt("Enter your GitHub Personal Access Token:");
+        if (!token) return;
+
+        statusMsg.style.color = "var(--purple)";
+        statusMsg.textContent = "Updating status on GitHub...";
+
+        const owner = "SugarHyou";
+        const repo = "sugarhyperdose-v2";
+        const path = "public/admin.json";
+        const branch = "main";
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+        try {
+            let siteData = { onlineStatus: "ONLINE", posts: [] };
+            let sha = null;
+
+            const getRes = await fetch(apiUrl, {
+                headers: { "Authorization": `token ${token}` }
+            });
+
+            if (getRes.ok) {
+                const fileData = await getRes.json();
+                sha = fileData.sha;
+                const decodedContent = decodeURIComponent(escape(atob(fileData.content)));
+                const parsed = JSON.parse(decodedContent);
+                if (Array.isArray(parsed)) {
+                    siteData.posts = parsed;
+                } else {
+                    siteData = parsed;
+                }
+            }
+
+            siteData.onlineStatus = newStatus;
+
+            const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify(siteData, null, 2))));
+
+            const putRes = await fetch(apiUrl, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: `Update site status to: ${newStatus}`,
+                    content: updatedContent,
+                    sha: sha,
+                    branch: branch
+                })
+            });
+
+            if (putRes.ok) {
+                statusMsg.style.color = "limegreen";
+                statusMsg.textContent = "Success! Status updated live!";
+            } else {
+                const errData = await putRes.json();
+                throw new Error(errData.message || "Failed to update status");
+            }
+        } catch (err) {
+            statusMsg.style.color = "red";
+            statusMsg.textContent = "Error: " + err.message;
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const blogFeed = document.getElementById("blog-feed");
+    const onlineStatusSpan = document.getElementById("online-status");
+
+    if (!blogFeed && !onlineStatusSpan) return;
+
+    fetch("public/admin.json")
+        .then(response => {
+            if (!response.ok) throw new Error("Could not load admin config.");
+            return response.json();
+        })
+        .then(data => {
+            let posts = [];
+            let status = "ONLINE";
+
+            if (Array.isArray(data)) {
+                posts = data;
+            } else {
+                posts = data.posts || [];
+                status = data.onlineStatus || "ONLINE";
+            }
+
+            if (onlineStatusSpan) {
+                onlineStatusSpan.textContent = `● ${status}`;
+                if (status === "ONLINE") {
+                    onlineStatusSpan.style.color = "var(--green)";
+                } else if (status === "OFFLINE") {
+                    onlineStatusSpan.style.color = "red";
+                } else {
+                    onlineStatusSpan.style.color = "orange";
+                }
+            }
+
+            if (blogFeed) {
+                blogFeed.innerHTML = "";
+                if (posts.length === 0) {
+                    blogFeed.innerHTML = "<p style='text-align: center; color: var(--purple);'>No posts yet!</p>";
+                    return;
+                }
+
+                posts.forEach(post => {
+                    const postCard = document.createElement("div");
+                    postCard.className = "blog-post";
+                    postCard.style.cssText = "border: 2px inset var(--purple); background: white; padding: 10px; margin-bottom: 10px;";
+
+                    postCard.innerHTML = `
+                        <div class="blog-header flex align-center" style="gap: 10px; margin-bottom: 8px; border-bottom: 1px dashed var(--purple); padding-bottom: 5px;">
+                            <img src="assets/art/Sugar-13-(Aug-5-2026).gif" alt="PFP" style="width: 32px; height: 32px; object-fit: cover; border: 1px solid var(--purple);">
+                            <div>
+                                <div style="font-weight: bold; color: var(--purple); font-size: 14px;">Sugar</div>
+                                <div style="font-size: 10px; color: gray;">${post.date}</div>
+                            </div>
+                        </div>
+                        <div class="blog-title" style="font-weight: bold; font-size: 15px; margin-bottom: 5px;">${post.title}</div>
+                        <div class="blog-text" style="font-size: 13px; word-break: break-word;">${post.content}</div>
+                    `;
+                    blogFeed.appendChild(postCard);
+                });
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            if (blogFeed) blogFeed.innerHTML = "<p style='color: red; text-align: center;'>Failed to load blog feed.</p>";
+        });
 });

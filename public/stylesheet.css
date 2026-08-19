@@ -39,8 +39,9 @@ body {
     line-height: 1.5;
     color: var(--purple);
     min-height: 100vh;
-    max-height: 100vh;
+    height: 100vh;
     padding: 15px;
+    overflow: hidden;
 }
 
 h1 {
@@ -97,14 +98,21 @@ img {
 }
 
 #left-container,
+#right-container,
+#center-container {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+#left-container,
 #right-container {
     flex: 1;
-    border: 3px solid red;
 }
 
 #center-container {
     flex: 3;
-    border: 3px solid blue;
+    gap: 25px;
 }
 
 .app {
@@ -116,24 +124,34 @@ img {
     color: var(--red);
 }
 
-.app:nth-child(2) {
+.app:nth-child(7n+2) {
     border-color: var(--orange);
     color: var(--orange);
 }
 
-.app:nth-child(3) {
+.app:nth-child(7n+3) {
     border-color: var(--yellow);
     color: var(--yellow);
 }
 
-.app:nth-child(4) {
+.app:nth-child(7n+4) {
     border-color: var(--green);
     color: var(--green);
 }
 
-.app:nth-child(5) {
+.app:nth-child(7n+5) {
     border-color: var(--blue);
     color: var(--blue);
+}
+
+.app:nth-child(7n+6) {
+    border-color: var(--purple);
+    color: var(--purple);
+}
+
+.app:nth-child(7n+7) {
+    border-color: var(--pink);
+    color: var(--pink);
 }
 
 .window {

@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,37 +23,67 @@
             height: 120px;
             resize: vertical;
         }
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .tab-btn.active {
+            background: var(--purple);
+            color: white;
+        }
     </style>
 </head>
 
 <body class="flex wrap">
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
 
     <div id="center-container" class="flex justify-center align-center wrap" style="width: 100%;">
-        <div class="admin-window window">
+        <div class="admin-window window" style="width: 400px;">
             <div class="title-bar flex">
-                <span>ADMIN.EXE - Post Creator</span>
+                <span>ADMIN.EXE - Control Panel</span>
                 <div class="title-bar-controls flex">
                     <span class="maximize flex justify-center align-center">🗖</span>
                     <span class="close flex justify-center align-center">X</span>
                 </div>
             </div>
+            
+            <!-- Tab Navigation -->
+            <div class="admin-tabs flex" style="margin-bottom: 15px; gap: 5px; padding: 5px;">
+                <button id="tab-blog-btn" class="player-btn tab-btn active">Blog Post</button>
+                <button id="tab-status-btn" class="player-btn tab-btn">Site Status</button>
+            </div>
+
             <div class="admin-body">
-                <label style="color: var(--purple); font-weight: bold;">Post Title:</label>
-                <input type="text" id="post-title" class="admin-input" placeholder="What's on your mind?">
+                <!-- TAB 1: BLOG POST CREATOR -->
+                <div id="tab-blog-content">
+                    <label style="color: var(--purple); font-weight: bold;">Post Title:</label>
+                    <input type="text" id="post-title" class="admin-input" placeholder="What's on your mind?">
 
-                <label style="color: var(--purple); font-weight: bold;">Post Content (HTML allowed):</label>
-                <textarea id="post-content" class="admin-textarea" placeholder="Type your blog post here..."></textarea>
+                    <label style="color: var(--purple); font-weight: bold;">Post Content (HTML allowed):</label>
+                    <textarea id="post-content" class="admin-textarea" placeholder="Type your blog post here..."></textarea>
 
-                <button id="publish-btn" class="player-btn" style="width: 100%; padding: 10px; cursor: pointer;">Publish</button>
-                <div id="status-msg" style="margin-top: 10px; font-size: 14px; text-align: center;"></div>
+                    <button id="publish-btn" class="player-btn" style="width: 100%; padding: 10px; cursor: pointer;">Publish Post</button>
+                    <div id="status-msg" style="margin-top: 10px; font-size: 14px; text-align: center;"></div>
+                </div>
+
+                <!-- TAB 2: SITE STATUS CONFIG -->
+                <div id="tab-status-content" style="display: none;">
+                    <label style="color: var(--purple); font-weight: bold;">Select Status:</label>
+                    <select id="status-select" class="admin-input">
+                        <option value="ONLINE">● ONLINE</option>
+                        <option value="OFFLINE">● OFFLINE</option>
+                        <option value="BUSY">● BUSY</option>
+                        <option value="AWAY">● AWAY</option>
+                    </select>
+
+                    <button id="save-status-btn" class="player-btn" style="width: 100%; padding: 10px; cursor: pointer;">Update Status</button>
+                    <div id="status-setting-msg" style="margin-top: 10px; font-size: 14px; text-align: center;"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
