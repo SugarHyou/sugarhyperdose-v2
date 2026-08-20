@@ -19,7 +19,7 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <div id="left-container" class="flex column">
+    <div id="left-container" class="flex column justify-center">
         <div class="window">
             <div class="title-bar flex">
                 <span>Quick_Intro.txt</span>
@@ -28,7 +28,7 @@
                     <span class="close flex justify-center align-center">X</span>
                 </div>
             </div>
-        <img src="assets/art/Sugar-13-(Aug-5-2026).gif">
+            <img src="assets/art/Sugar-13-(Aug-5-2026).gif" style="display: block; margin: auto;" height="150">
             <h1>SugarHyperdose</h1>
             <table style="width: 100%;">
                 <tr>
@@ -41,15 +41,16 @@
                 </tr>
                 <tr>
                     <td>Pronouns:</td>
-                    <td>He / They / She</td>
+                    <td><span style="color: var(--blue);">He</span> / They / <span
+                            style="color: var(--pink);">She</span></td>
                 </tr>
                 <tr>
-                    <td>Birthday:</td>
-                    <td>October 14</td>
+                    <td>Button:</td>
+                    <td><img src="assets/graphics/buttons/SugarHyperdose.gif" style="padding-top: 5px;"></td>
                 </tr>
             </table>
         </div>
-        <div class="window" style="width: 100%; max-width: 450px;">
+        <div class="window" style="width: 100%; max-height: 150px;">
             <div class="title-bar flex">
                 <span>Quick_Blog.exe</span>
                 <div class="title-bar-controls flex">
@@ -60,6 +61,17 @@
             <div id="blog-feed" class="flex column">
             </div>
         </div>
+        <div class="window" style="width: 100%; max-width: 450px;">
+            <div class="title-bar flex">
+                <span>Recent_Art.webp</span>
+                <div class="title-bar-controls flex">
+                    <span class="maximize flex justify-center align-center">🗖</span>
+                    <span class="close flex justify-center align-center">X</span>
+                </div>
+            </div>
+            <div id="recent-art-container" class="flex column justify-center align-center">
+            </div>
+        </div>
     </div>
 
     <div id="center-container" class="flex justify-center align-center wrap">
@@ -68,7 +80,7 @@
         <div id="journal" class="app flex justify-center align-center">Journal</div>
         <div id="guestbook" class="app flex justify-center align-center">Guestbook</div>
         <div id="shop" class="app flex justify-center align-center">Shop</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
+        <div id="credit" class="app flex justify-center align-center">Credits</div>
         <div id="" class="app flex justify-center align-center">WIP</div>
         <div id="" class="app flex justify-center align-center">WIP</div>
         <div id="" class="app flex justify-center align-center">WIP</div>
@@ -89,7 +101,7 @@
                     <span class="close flex justify-center align-center">X</span>
                 </div>
             </div>
-            
+
             <div id="music-player" class="flex column">
                 <div id="track-info" class="flex column">
                     <div id="track-title">No track loaded</div>

@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
             { title: "Chiwawa", artist: "Wanko Ni Mero Mero", src: "assets/audio/music/Chiwawa.mp3" },
             { title: "edgy", artist: "luvwillow", src: "assets/audio/music/edgy.mp3" },
             { title: "ELECTRIC WEEKEND ZONE", artist: "FLAVOR FOLEY", src: "assets/audio/music/ELECTRIC WEEKEND ZONE.mp3" },
+            { title: "Happy Place", artist: "ZAMination", src: "assets/audio/music/Happy Place.mp3" },
             { title: "INTERNET ANGEL", artist: "Aiobahn +81 and NEEDY GIRL OVERDOSE", src: "assets/audio/music/INTERNET ANGEL.mp3" },
+            { title: "INTERNET YAMERO", artist: "Aiobahn +81 and NEEDY GIRL OVERDOSE", src: "assets/audio/music/INTERNET YAMERO.mp3" },
             { title: "Let's Go Gambling!", artist: "FEM&M", src: "assets/audio/music/Let's Go Gambling!.mp3" },
             { title: "混沌ブギ 初音ミク", artist: "Jon -YAKITORI", src: "assets/audio/music/混沌ブギ 初音ミク.mp3" },
         ];
@@ -363,5 +365,73 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(err => {
             console.error(err);
             if (blogFeed) blogFeed.innerHTML = "<p style='color: red; text-align: center;'>Failed to load blog feed.</p>";
+        });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const artContainer = document.getElementById("recent-art-container");
+    if (!artContainer) return;
+
+    const owner = "SugarHyou";
+    const repo = "sugarhyperdose-v2";
+    const path = "public/assets/art";
+
+    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)
+        .then(res => res.json())
+        .then(files => {
+            const imageFiles = files.filter(file => /\.(png|gif|jpg|jpeg|webp)$/i.test(file.name));
+            
+            if (imageFiles.length > 0) {
+                imageFiles.sort((a, b) => {
+                    const extractDate = (filename) => {
+                        const match = filename.match(/\((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{1,2})-(\d{4})\)/i);
+                        return match ? new Date(`${match[1]} ${match[2]}, ${match[3]}`) : new Date(0);
+                    };
+                    return extractDate(a.name) - extractDate(b.name);
+                });
+
+                const topArt = imageFiles.slice(-3);
+                let currentIndex = 0;
+
+                artContainer.innerHTML = `
+                    <div class="art-carousel flex align-center justify-center" style="width: 100%; gap: 8px;">
+                        <button id="art-prev-btn" class="player-btn" style="height: 100%; cursor: pointer; padding: 4px 8px;">◀</button>
+                        <div id="art-slide-area" style="text-align: center; flex: 1; overflow: hidden;"></div>
+                        <button id="art-next-btn" class="player-btn" style="cursor: pointer; padding: 4px 8px;">▶</button>
+                    </div>
+                `;
+
+                const slideArea = document.getElementById("art-slide-area");
+                const prevBtn = document.getElementById("art-prev-btn");
+                const nextBtn = document.getElementById("art-next-btn");
+
+                function renderSlide(index) {
+                    const art = topArt[index];
+                    slideArea.innerHTML = `
+                        <a href="${art.download_url}" target="_blank" style="display: block; text-decoration: none;">
+                            <img src="${art.download_url}" style="max-width: 100%; max-height: 120px; object-fit: contain; border: 2px solid var(--purple);" alt="${art.name}">
+                            <div style="font-size: 14px;margin-top: 4px;">${art.name}</div>
+                        </a>
+                    `;
+                }
+                
+                renderSlide(currentIndex);
+                
+                nextBtn.addEventListener("click", () => {
+                    currentIndex = (currentIndex + 1) % topArt.length;
+                    renderSlide(currentIndex);
+                });
+
+                prevBtn.addEventListener("click", () => {
+                    currentIndex = (currentIndex - 1 + topArt.length) % topArt.length;
+                    renderSlide(currentIndex);
+                });
+
+            } else {
+                artContainer.innerHTML = "<div style='font-size: 13px; color: gray;'>No art found!</div>";
+            }
+        })
+        .catch(err => {
+            artContainer.innerHTML = "<div style='font-size: 13px; color: red;'>Error</div>";
         });
 });

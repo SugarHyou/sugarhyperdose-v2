@@ -35,7 +35,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     font-family: 'Main';
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.5;
     color: var(--purple);
     min-height: 100vh;
@@ -74,6 +74,14 @@ img {
     max-width: 100%;
 }
 
+a {
+    color: var(--pink);
+}
+
+a:hover {
+    color: var(--cyan);
+}
+
 .flex {
     display: flex;
     gap: 15px;
@@ -100,8 +108,7 @@ img {
 #left-container,
 #right-container,
 #center-container {
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     max-height: 100%;
 }
 
@@ -158,6 +165,8 @@ img {
     background: var(--white);
     border: 3px solid var(--purple);
     padding: 15px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .title-bar {
