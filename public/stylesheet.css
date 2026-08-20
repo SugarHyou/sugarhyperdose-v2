@@ -35,7 +35,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     font-family: 'Main';
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.5;
     color: var(--purple);
     min-height: 100vh;
@@ -59,13 +59,14 @@ h2,
 h3 {
     font-family: 'Headings';
     text-align: center;
-    word-wrap: ;
+    word-wrap: anywhere;
 }
 
 @keyframes rainbow-animation {
     0% {
         background-position: 0% 50%;
     }
+
     100% {
         background-position: 200% 50%;
     }
@@ -130,6 +131,13 @@ a:hover {
     border: 3px solid var(--red);
     outline: 3px solid var(--white);
     color: var(--red);
+    cursor: pointer;
+}
+
+.app:hover {
+    border-color: var(--cyan) !important;
+    color: var(--cyan) !important;
+    box-shadow: 0 0 10px var(--cyan);
 }
 
 .app:nth-child(7n+2) {
@@ -170,6 +178,11 @@ a:hover {
     overflow-y: auto;
 }
 
+.window.draggable-window {
+    position: absolute;
+    box-shadow: 0 0 10px var(--black);
+}
+
 .title-bar {
     background: var(--purple);
     justify-content: space-between;
@@ -177,6 +190,11 @@ a:hover {
     color: var(--white);
     margin: -15px -15px 10px -15px;
     padding: 2px;
+    cursor: grab;
+}
+
+.title-bar:active {
+    cursor: grabbing;
 }
 
 .title-bar-controls,
@@ -239,4 +257,12 @@ a:hover {
 .player-btn.active {
     background: var(--purple);
     color: var(--white);
+}
+
+body.dark-mode {
+    --black: white;
+    --white: black;
+    --purple: cyan;
+    --cyan: yellow;
+    background-image: url('assets/graphics/backgrounds/inverted.png');
 }

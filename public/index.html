@@ -19,7 +19,7 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <div id="left-container" class="flex column justify-center">
+    <div id="left-container" class="flex column">
         <div class="window">
             <div class="title-bar flex">
                 <span>Quick_Intro.txt</span>
@@ -50,17 +50,6 @@
                 </tr>
             </table>
         </div>
-        <div id="quick-blog" class="window" style="width: 100%; max-height: 150px;">
-            <div class="title-bar flex">
-                <span>Quick_Blog.exe</span>
-                <div class="title-bar-controls flex">
-                    <span class="maximize flex justify-center align-center">🗖</span>
-                    <span class="close flex justify-center align-center">X</span>
-                </div>
-            </div>
-            <div id="blog-feed" class="flex column">
-            </div>
-        </div>
         <div class="window" style="width: 100%; max-width: 450px;">
             <div class="title-bar flex">
                 <span>Recent_Art.webp</span>
@@ -75,21 +64,19 @@
     </div>
 
     <div id="center-container" class="flex justify-center align-center wrap">
-        <div id="about-me" class="app flex justify-center align-center">About Me</div>
-        <div id="gallery" class="app flex justify-center align-center">Gallery</div>
-        <div id="journal" class="app flex justify-center align-center">Journal</div>
-        <div id="guestbook" class="app flex justify-center align-center">Guestbook</div>
-        <div id="shop" class="app flex justify-center align-center">Shop</div>
-        <div id="credit" class="app flex justify-center align-center">Credits</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
-        <div id="" class="app flex justify-center align-center">WIP</div>
+        <div id="about-me-btn" class="app flex justify-center align-center" onclick="openWindow('about-me-window')">
+            About Me</div>
+        <div id="gallery-btn" class="app flex justify-center align-center" onclick="openWindow('gallery-window')">
+            Gallery</div>
+        <div id="journal-btn" class="app flex justify-center align-center" onclick="openWindow('journal-window')">
+            Journal</div>
+        <div id="guestbook-btn" class="app flex justify-center align-center" onclick="openWindow('guestbook-window')">
+            Guestbook</div>
+        <div id="shop-btn" class="app flex justify-center align-center" onclick="openWindow('shop-window')">Shop</div>
+        <div id="credit-btn" class="app flex justify-center align-center" onclick="openWindow('credit-window')">Credits
+        </div>
+        <div id="settings-btn" class="app flex justify-center align-center" onclick="openWindow('settings-window')">
+            Settings</div>
     </div>
 
     <div id="right-container" class="flex column">
@@ -121,7 +108,68 @@
                 </div>
             </div>
         </div>
+        <div id="quick-blog" class="window" style="width: 100%;">
+            <div class="title-bar flex">
+                <span>Quick_Blog.exe</span>
+                <div class="title-bar-controls flex">
+                    <span class="maximize flex justify-center align-center">🗖</span>
+                    <span class="close flex justify-center align-center">X</span>
+                </div>
+            </div>
+            <div id="blog-feed" class="flex column">
+            </div>
+        </div>
+        <div id="cbox" class="window" style="width: 100%;">
+            <div class="title-bar flex">
+                <span>Cbox.webp</span>
+                <div class="title-bar-controls flex">
+                    <span class="maximize flex justify-center align-center">🗖</span>
+                    <span class="close flex justify-center align-center">X</span>
+                </div>
+            </div>
+            <iframe src="https://www3.cbox.ws/box/?boxid=3559354&boxtag=4m1VRs" width="100%" height="250"
+                allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0"
+                scrolling="auto"></iframe>
+        </div>
     </div>
+
+    <!----------------------------------- Modals ---------------------------------------->
+
+    <!-- Example of an app window that pops up -->
+    <div id="about-me-window" class="window draggable-window"
+        style="display: none; position: absolute; top: 100px; left: 100px; width: 300px;">
+        <div class="title-bar flex">
+            <span>About_Me.txt</span>
+            <div class="title-bar-controls flex">
+                <span class="maximize flex justify-center align-center">🗖</span>
+                <span class="close flex justify-center align-center" onclick="closeWindow('about-me-window')">X</span>
+            </div>
+        </div>
+        <div class="window-content" style="padding: 10px;">
+            <p>Hey! I'm Sugar. I like sweets and coding retro layouts.</p>
+        </div>
+    </div>
+
+    <div id="settings-window" class="window"
+        style="display: none; width: 280px; position: absolute; top: 150px; left: 150px;">
+        <div class="title-bar flex justify-between align-center">
+            <span>Settings.exe</span>
+            <div class="title-bar-controls flex">
+                <span class="maximize flex justify-center align-center">🗖</span>
+                <span class="close flex justify-center align-center" onclick="closeWindow('settings-window')">X</span>
+            </div>
+        </div>
+        <div class="window-body" style="padding: 12px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-weight: bold; border-bottom: 1px solid var(--purple); padding-bottom: 4px;">Preferences
+            </div>
+            <label
+                style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 14px;">
+                <span>Dark Mode</span>
+                <input type="checkbox" id="dark-mode-toggle" style="cursor: pointer;">
+            </label>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

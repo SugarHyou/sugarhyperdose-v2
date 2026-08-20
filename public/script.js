@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const art = topArt[index];
                     slideArea.innerHTML = `
                         <a href="${art.download_url}" target="_blank" style="display: block; text-decoration: none;">
-                            <img src="${art.download_url}" style="max-width: 100%; max-height: 120px; object-fit: contain; border: 2px solid var(--purple);" alt="${art.name}">
+                            <img src="${art.download_url}" style="max-width: 100%; max-height: 150px; object-fit: contain; border: 2px solid var(--purple);" alt="${art.name}">
                             <div style="font-size: 14px;margin-top: 4px;">${art.name}</div>
                         </a>
                     `;
@@ -434,4 +434,108 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(err => {
             artContainer.innerHTML = "<div style='font-size: 13px; color: red;'>Error</div>";
         });
+});
+
+function windowId(id) {
+    return document.getElementById(id);
+}
+
+function openWindow(id) {
+    const win = windowId(id);
+    if (win) {
+        win.style.display = "block";
+        bringToFront(win);
+    }
+}
+
+function closeWindow(id) {
+    const win = windowId(id);
+    if (win) {
+        win.style.display = "none";
+    }
+}
+
+let highestZ = 100;
+function bringToFront(win) {
+    highestZ++;
+    win.style.zIndex = highestZ;
+}
+
+document.addEventListener("mousedown", (e) => {
+    let target = e.target;
+    
+    if (target.nodeType === Node.TEXT_NODE) {
+        target = target.parentNode;
+    }
+
+    const titleBar = target.closest ? target.closest(".title-bar") : findParentByClass(target, "title-bar");
+    if (!titleBar) return;
+
+    const windowElement = titleBar.closest ? titleBar.closest(".window") : findParentByClass(titleBar, "window");
+    if (!windowElement) return;
+
+    bringToFront(windowElement);
+
+    let shiftX = e.clientX - windowElement.getBoundingClientRect().left;
+    let shiftY = e.clientY - windowElement.getBoundingClientRect().top;
+
+    windowElement.style.position = "absolute";
+    windowElement.style.zIndex = ++highestZ;
+
+    function moveAt(pageX, pageY) {
+        windowElement.style.left = pageX - shiftX + 'px';
+        windowElement.style.top = pageY - shiftY + 'px';
+    }
+
+    function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    document.addEventListener('mouseup', () => {
+        document.removeEventListener('mousemove', onMouseMove);
+    }, { once: true });
+});
+
+function findParentByClass(element, className) {
+    while (element && element !== document.body) {
+        if (element.classList && element.classList.contains(className)) {
+            return element;
+        }
+        element = element.parentNode;
+    }
+    return null;
+}
+
+document.addEventListener("selectstart", (e) => {
+    let target = e.target;
+    if (target.nodeType === Node.TEXT_NODE) target = target.parentNode;
+    if (target.closest ? target.closest(".title-bar") : findParentByClass(target, "title-bar")) {
+        e.preventDefault();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const darkModeToggle = document.getElementById("dark-mode-toggle");
+    
+    const savedTheme = localStorage.getItem("theme");
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    if (savedTheme === "dark" || (!savedTheme && systemPrefersDark)) {
+        document.body.classList.add("dark-mode");
+        if (darkModeToggle) darkModeToggle.checked = true;
+    }
+
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener("change", () => {
+            if (darkModeToggle.checked) {
+                document.body.classList.add("dark-mode");
+                localStorage.setItem("theme", "dark");
+            } else {
+                document.body.classList.remove("dark-mode");
+                localStorage.setItem("theme", "light");
+            }
+        });
+    }
 });
