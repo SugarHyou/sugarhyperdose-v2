@@ -343,23 +343,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                posts.forEach(post => {
-                    const postCard = document.createElement("div");
-                    postCard.className = "blog-post";
+                // Grab only the most recent post (the first one in the array)
+                const post = posts[0];
+                const postCard = document.createElement("div");
+                postCard.className = "blog-post";
 
-                    postCard.innerHTML = `
-                        <div class="blog-header flex align-center" style="gap: 10px;">
-                            <img src="assets/art/Sugar-11-(Jul-25-2026).gif" alt="PFP" style="width: 40px; height: 40px; object-fit: cover; border: 1px solid var(--purple);">
-                            <div>
-                                <div style="font-weight: bold;">SugarHyperdose</div>
-                                <div style="font-size: 10px; color: gray;">${post.date}</div>
-                            </div>
+                postCard.innerHTML = `
+                    <div class="blog-header flex align-center" style="gap: 10px;">
+                        <img src="assets/art/Sugar-11-(Jul-25-2026).gif" alt="PFP" style="width: 40px; height: 40px; object-fit: cover; border: 1px solid var(--purple);">
+                        <div>
+                            <div style="font-weight: bold;">SugarHyperdose</div>
+                            <div style="font-size: 10px; color: gray;">${post.date}</div>
                         </div>
-                        <div class="blog-title" style="font-weight: bold; margin: 7px 0 2px;">${post.title}</div>
-                        <div class="blog-text" style="font-size: 14px;">${post.content}</div>
-                    `;
-                    blogFeed.appendChild(postCard);
-                });
+                    </div>
+                    <div class="blog-title" style="font-weight: bold; margin: 7px 0 2px;">${post.title}</div>
+                    <div class="blog-text" style="font-size: 14px;">${post.content}</div>
+                `;
+                blogFeed.appendChild(postCard);
             }
         })
         .catch(err => {

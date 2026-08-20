@@ -59,6 +59,7 @@ h2,
 h3 {
     font-family: 'Headings';
     text-align: center;
+    word-wrap: ;
 }
 
 @keyframes rainbow-animation {
