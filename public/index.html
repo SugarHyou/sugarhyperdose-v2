@@ -64,10 +64,16 @@
     </div>
 
     <div id="center-container" class="flex justify-center align-center wrap">
-        <div id="about-me-btn" class="app flex justify-center align-center" onclick="openWindow('about-me-window')">
-            About Me</div>
-        <div id="gallery-btn" class="app flex justify-center align-center" onclick="openWindow('gallery-window')">
-            Gallery</div>
+        <div id="about-me-btn" class="app flex column justify-center align-center"
+            onclick="openWindow('about-me-window')">
+            <img src="assets/art/Sugar-7B-(Jul-9-2026).gif">
+            <span>About Me</span>
+        </div>
+        <div id="gallery-btn" class="app flex column justify-center align-center"
+            onclick="openWindow('gallery-window')">
+            <img id="gallery-thumb" src="" style="width: 100px; height: 100px; object-fit: cover;" alt="Gallery">
+            <span>Gallery</span>
+        </div>
         <div id="journal-btn" class="app flex justify-center align-center" onclick="openWindow('journal-window')">
             Journal</div>
         <div id="guestbook-btn" class="app flex justify-center align-center" onclick="openWindow('guestbook-window')">
@@ -135,9 +141,8 @@
 
     <!----------------------------------- Modals ---------------------------------------->
 
-    <!-- Example of an app window that pops up -->
     <div id="about-me-window" class="window draggable-window"
-        style="display: none; position: absolute; top: 100px; left: 100px; width: 300px;">
+        style="display: none; position: absolute; top: 100px; left: 100px;">
         <div class="title-bar flex">
             <span>About_Me.txt</span>
             <div class="title-bar-controls flex">
@@ -145,9 +150,7 @@
                 <span class="close flex justify-center align-center" onclick="closeWindow('about-me-window')">X</span>
             </div>
         </div>
-        <div class="window-content" style="padding: 10px;">
             <p>Hey! I'm Sugar. I like sweets and coding retro layouts.</p>
-        </div>
     </div>
 
     <div id="settings-window" class="window"

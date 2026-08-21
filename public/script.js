@@ -539,3 +539,65 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const galleryThumb = document.getElementById("gallery-thumb");
+    if (!galleryThumb) return;
+
+    const owner = "SugarHyou";
+    const repo = "sugarhyperdose-v2";
+    const path = "public/assets/art";
+
+    fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`)
+        .then(res => res.json())
+        .then(files => {
+            const imageFiles = files.filter(file => /\.(png|gif|jpg|jpeg|webp)$/i.test(file.name));
+            
+            if (imageFiles.length > 0) {
+                imageFiles.sort((a, b) => {
+                    const extractDate = (filename) => {
+                        const match = filename.match(/\((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{1,2})-(\d{4})\)/i);
+                        return match ? new Date(`${match[1]} ${match[2]}, ${match[3]}`) : new Date(0);
+                    };
+                    return extractDate(a.name) - extractDate(b.name);
+                });
+
+                const latestArt = imageFiles[imageFiles.length - 1];
+                galleryThumb.src = latestArt.download_url;
+            }
+        })
+        .catch(err => {
+            console.error("Failed to load gallery thumbnail:", err);
+        });
+});
+
+document.addEventListener("click", (e) => {
+    const maxBtn = e.target.closest(".maximize");
+    if (!maxBtn) return;
+
+    const windowElement = maxBtn.closest(".window");
+    if (!windowElement) return;
+
+    if (windowElement.classList.contains("maximized")) {
+        windowElement.classList.remove("maximized");
+        windowElement.style.top = windowElement.dataset.origTop;
+        windowElement.style.left = windowElement.dataset.origLeft;
+        windowElement.style.width = windowElement.dataset.origWidth;
+        windowElement.style.height = windowElement.dataset.origHeight;
+    } else {
+        windowElement.dataset.origTop = windowElement.style.top;
+        windowElement.dataset.origLeft = windowElement.style.left;
+        windowElement.dataset.origWidth = windowElement.style.width;
+        windowElement.dataset.origHeight = windowElement.style.height;
+
+        windowElement.classList.add("maximized");
+        
+        const w = window.innerWidth * 0.7;
+        const h = window.innerHeight * 0.8;
+
+        windowElement.style.width = w + "px";
+        windowElement.style.height = h + "px";
+        windowElement.style.top = (window.innerHeight - h) / 2 + "px";
+        windowElement.style.left = (window.innerWidth - w) / 2 + "px";
+    }
+});
