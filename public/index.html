@@ -61,28 +61,66 @@
             <div id="recent-art-container" class="flex column justify-center align-center">
             </div>
         </div>
+        <div id="settings-window" class="window">
+            <div class="title-bar flex justify-between align-center">
+                <span>Settings.js</span>
+                <div class="title-bar-controls flex">
+                    <span class="maximize flex justify-center align-center">🗖</span>
+                    <span class="close flex justify-center align-center"
+                        onclick="closeWindow('settings-window')">X</span>
+                </div>
+            </div>
+            <div style="font-weight: bold; border-bottom: 1px solid var(--purple); padding-bottom: 4px;">Preferences
+            </div>
+            <label
+                style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 14px;">
+                <span>Dark Mode</span>
+                <input type="checkbox" id="dark-mode-toggle" style="cursor: pointer;">
+            </label>
+        </div>
     </div>
 
-    <div id="center-container" class="flex justify-center align-center wrap">
-        <div id="about-me-btn" class="app flex column justify-center align-center"
-            onclick="openWindow('about-me-window')">
-            <img src="assets/art/Sugar-7B-(Jul-9-2026).gif">
-            <span>About Me</span>
+    <div id="center-container" class="flex align-center wrap">
+        <div class="window" style="height: fit-content;">
+            <div class="title-bar flex">
+                <span>About_Me.txt</span>
+                <div class="title-bar-controls flex">
+                    <span class="maximize flex justify-center align-center">🗖</span>
+                    <span class="close flex justify-center align-center"
+                        onclick="closeWindow('about-me-window')">X</span>
+                </div>
+            </div>
+            <div class="flex" style="justify-content: space-between;">
+                <img src="assets/graphics/misc/i-killed-cringe-culture.png"
+                    style="position: absolute; top: 2%; left: 19%; height: 90px; transform: rotate(-30deg); filter: drop-shadow(1px 1px white) drop-shadow(1px -1px white) drop-shadow(-1px -1px white) drop-shadow(-1px 1px white);">
+                <img src="assets/graphics/misc/stars.gif"
+                    style="position: absolute; top: 2%; right: 15%; height: 90px; transform: rotate(30deg); filter: drop-shadow(1px 1px white) drop-shadow(1px -1px white) drop-shadow(-1px -1px white) drop-shadow(-1px 1px white);">
+                <img src="assets/art/Sugar-4-(Jul-5-2026).png" height="400" style="margin: -10px -20px;">
+                <div class="flex column align-center">
+                    <h1 style="font-size: 30px; z-index: 90;">SugarHyperdose</h1>
+                    <div class="flex wrap justify-center">
+                        <div id="gallery-btn" class="app flex column justify-center align-center"
+                            onclick="openWindow('gallery-window')">
+                            <img id="gallery-thumb" src="" style="width: 100px; height: 100px; object-fit: cover;"
+                                alt="Gallery">
+                            <span>Gallery</span>
+                        </div>
+                        <div id="journal-btn" class="app flex justify-center align-center"
+                            onclick="openWindow('journal-window')">
+                            Journal</div>
+                        <div id="shop-btn" class="app flex justify-center align-center"
+                            onclick="openWindow('shop-window')">Shop</div>
+                        <div id="credit-btn" class="app flex justify-center align-center"
+                            onclick="openWindow('credit-window')">Credits
+                        </div>
+                    </div>
+                </div>
+                <img src="assets/camera/Jul-18-2026-(3).png" height="425"
+                    style="filter: drop-shadow(-1px 1px white) drop-shadow(-4px 4px rgba(137, 43, 226, 0.8)); margin: -50px -10px -20px; pointer-events: none;">
+            </div>
+
         </div>
-        <div id="gallery-btn" class="app flex column justify-center align-center"
-            onclick="openWindow('gallery-window')">
-            <img id="gallery-thumb" src="" style="width: 100px; height: 100px; object-fit: cover;" alt="Gallery">
-            <span>Gallery</span>
-        </div>
-        <div id="journal-btn" class="app flex justify-center align-center" onclick="openWindow('journal-window')">
-            Journal</div>
-        <div id="guestbook-btn" class="app flex justify-center align-center" onclick="openWindow('guestbook-window')">
-            Guestbook</div>
-        <div id="shop-btn" class="app flex justify-center align-center" onclick="openWindow('shop-window')">Shop</div>
-        <div id="credit-btn" class="app flex justify-center align-center" onclick="openWindow('credit-window')">Credits
-        </div>
-        <div id="settings-btn" class="app flex justify-center align-center" onclick="openWindow('settings-window')">
-            Settings</div>
+
     </div>
 
     <div id="right-container" class="flex column">
@@ -116,7 +154,7 @@
         </div>
         <div id="quick-blog" class="window" style="width: 100%;">
             <div class="title-bar flex">
-                <span>Quick_Blog.exe</span>
+                <span>Quick_Blog.js</span>
                 <div class="title-bar-controls flex">
                     <span class="maximize flex justify-center align-center">🗖</span>
                     <span class="close flex justify-center align-center">X</span>
@@ -139,39 +177,6 @@
         </div>
     </div>
 
-    <!----------------------------------- Modals ---------------------------------------->
-
-    <div id="about-me-window" class="window draggable-window"
-        style="display: none; position: absolute; top: 100px; left: 100px;">
-        <div class="title-bar flex">
-            <span>About_Me.txt</span>
-            <div class="title-bar-controls flex">
-                <span class="maximize flex justify-center align-center">🗖</span>
-                <span class="close flex justify-center align-center" onclick="closeWindow('about-me-window')">X</span>
-            </div>
-        </div>
-            <p>Hey! I'm Sugar. I like sweets and coding retro layouts.</p>
-    </div>
-
-    <div id="settings-window" class="window"
-        style="display: none; width: 280px; position: absolute; top: 150px; left: 150px;">
-        <div class="title-bar flex justify-between align-center">
-            <span>Settings.exe</span>
-            <div class="title-bar-controls flex">
-                <span class="maximize flex justify-center align-center">🗖</span>
-                <span class="close flex justify-center align-center" onclick="closeWindow('settings-window')">X</span>
-            </div>
-        </div>
-        <div class="window-body" style="padding: 12px; display: flex; flex-direction: column; gap: 10px;">
-            <div style="font-weight: bold; border-bottom: 1px solid var(--purple); padding-bottom: 4px;">Preferences
-            </div>
-            <label
-                style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 14px;">
-                <span>Dark Mode</span>
-                <input type="checkbox" id="dark-mode-toggle" style="cursor: pointer;">
-            </label>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>

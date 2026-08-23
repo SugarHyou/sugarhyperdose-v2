@@ -126,13 +126,13 @@ a:hover {
 
 .app {
     background: var(--white);
-    height: 170px;
-    width: 150px;
+    height: 190px;
+    width: 170px;
     border: 3px solid var(--red);
     outline: 3px solid var(--white);
     color: var(--red);
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     font-family: 'Headings';
 }
 
@@ -173,6 +173,7 @@ a:hover {
 }
 
 .window {
+    position: relative;
     background: var(--white);
     border: 3px solid var(--purple);
     padding: 15px;
