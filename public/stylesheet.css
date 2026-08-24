@@ -84,6 +84,12 @@ a:hover {
     color: var(--cyan);
 }
 
+blockquote {
+    font-size: 14px;
+    opacity: 0.5;
+    margin: -20px 0 0;
+}
+
 .flex {
     display: flex;
     gap: 15px;
@@ -275,5 +281,6 @@ body.dark-mode {
     --white: black;
     --purple: cyan;
     --cyan: yellow;
+    --green: lime;
     background-image: url('assets/graphics/backgrounds/inverted.png');
 }
