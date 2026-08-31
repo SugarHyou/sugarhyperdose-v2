@@ -600,3 +600,84 @@ document.addEventListener("click", (e) => {
         windowElement.style.left = (window.innerWidth - w) / 2 + "px";
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const saveMediaBtn = document.getElementById("save-media-btn");
+    if (!saveMediaBtn) return;
+
+    saveMediaBtn.addEventListener("click", async () => {
+        const playing = document.getElementById("media-playing").value.trim();
+        const watching = document.getElementById("media-watching").value.trim();
+        const reading = document.getElementById("media-reading").value.trim();
+        const statusMsg = document.getElementById("media-setting-msg");
+
+        const token = getGitHubToken();
+        if (!token) return;
+
+        statusMsg.style.color = "var(--purple)";
+        statusMsg.textContent = "Updating media on GitHub...";
+
+        const owner = "SugarHyou";
+        const repo = "sugarhyperdose-v2";
+        const path = "public/admin.json";
+        const branch = "main";
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+        try {
+            let siteData = { onlineStatus: "ONLINE", posts: [] };
+            let sha = null;
+
+            const getRes = await fetch(apiUrl, {
+                headers: { "Authorization": `token ${token}` }
+            });
+
+            if (getRes.status === 401) {
+                localStorage.removeItem("github_token");
+                throw new Error("Invalid or expired token. Please try again.");
+            }
+
+            if (getRes.ok) {
+                const fileData = await getRes.json();
+                sha = fileData.sha;
+                const decodedContent = decodeURIComponent(escape(atob(fileData.content)));
+                const parsed = JSON.parse(decodedContent);
+                if (Array.isArray(parsed)) {
+                    siteData.posts = parsed;
+                } else {
+                    siteData = parsed;
+                }
+            }
+
+            if (playing) siteData.currentlyPlaying = playing;
+            if (watching) siteData.currentlyWatching = watching;
+            if (reading) siteData.currentlyReading = reading;
+
+            const updatedContent = btoa(unescape(encodeURIComponent(JSON.stringify(siteData, null, 2))));
+
+            const putRes = await fetch(apiUrl, {
+                method: "PUT",
+                headers: {
+                    "Authorization": `token ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: "Update currently playing/watching/reading media",
+                    content: updatedContent,
+                    sha: sha,
+                    branch: branch
+                })
+            });
+
+            if (putRes.ok) {
+                statusMsg.style.color = "limegreen";
+                statusMsg.textContent = "Success! Media updated live!";
+            } else {
+                const errData = await putRes.json();
+                throw new Error(errData.message || "Failed to update media");
+            }
+        } catch (err) {
+            statusMsg.style.color = "red";
+            statusMsg.textContent = "Error: " + err.message;
+        }
+    });
+});
