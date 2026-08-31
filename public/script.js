@@ -104,27 +104,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// 2. ADMIN TAB SWITCHING
 document.addEventListener("DOMContentLoaded", () => {
-    const tabBlogBtn = document.getElementById("tab-blog-btn");
-    const tabStatusBtn = document.getElementById("tab-status-btn");
-    const tabBlogContent = document.getElementById("tab-blog-content");
-    const tabStatusContent = document.getElementById("tab-status-content");
+    const tabs = [
+        { btn: document.getElementById("tab-blog-btn"), content: document.getElementById("tab-blog-content") },
+        { btn: document.getElementById("tab-status-btn"), content: document.getElementById("tab-status-content") },
+        { btn: document.getElementById("tab-media-btn"), content: document.getElementById("tab-media-content") }
+    ];
 
-    if (tabBlogBtn && tabStatusBtn) {
-        tabBlogBtn.addEventListener("click", () => {
-            tabBlogContent.style.display = "block";
-            tabStatusContent.style.display = "none";
-            tabBlogBtn.classList.add("active");
-            tabStatusBtn.classList.remove("active");
-        });
+    tabs.forEach(tab => {
+        if (!tab.btn || !tab.content) return;
 
-        tabStatusBtn.addEventListener("click", () => {
-            tabBlogContent.style.display = "none";
-            tabStatusContent.style.display = "block";
-            tabStatusBtn.classList.add("active");
-            tabBlogBtn.classList.remove("active");
+        tab.btn.addEventListener("click", () => {
+            tabs.forEach(t => {
+                if (t.btn && t.content) {
+                    t.content.style.display = t === tab ? "block" : "none";
+                    t.btn.classList.toggle("active", t === tab);
+                }
+            });
         });
-    }
+    });
 });
 
 function getGitHubToken() {
@@ -409,7 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const art = topArt[index];
                     slideArea.innerHTML = `
                         <a href="${art.download_url}" target="_blank" style="display: block; text-decoration: none;">
-                            <img src="${art.download_url}" style="max-width: 100%; max-height: 150px; object-fit: contain; border: 2px solid var(--purple);" alt="${art.name}">
+                            <img src="${art.download_url}" style="max-width: 100%; height: 150px; object-fit: contain; border: 2px solid var(--purple);" alt="${art.name}">
                             <div style="font-size: 14px;margin-top: 4px;">${art.name}</div>
                         </a>
                     `;

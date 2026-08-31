@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
 
 <head>
@@ -16,9 +12,6 @@
 </head>
 
 <body class="flex wrap">
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
     <div id="left-container" class="flex column">
         <div class="window">
             <div class="title-bar flex">
@@ -80,8 +73,8 @@
         </div>
     </div>
 
-    <div id="center-container" class="flex align-center wrap">
-        <div class="window" style="height: fit-content;">
+    <div id="center-container" class="flex wrap">
+        <div class="window">
             <div class="title-bar flex">
                 <span>About_Me.txt</span>
                 <div class="title-bar-controls flex">
@@ -90,7 +83,7 @@
                         onclick="closeWindow('about-me-window')">X</span>
                 </div>
             </div>
-            <div class="flex" style="justify-content: space-between;">
+            <div class="flex align-center" style="justify-content: space-between; position: relative;">
                 <img src="assets/graphics/misc/i-killed-cringe-culture.png"
                     style="position: absolute; top: 2%; left: 19%; height: 90px; transform: rotate(-30deg); filter: drop-shadow(1px 1px white) drop-shadow(1px -1px white) drop-shadow(-1px -1px white) drop-shadow(-1px 1px white);">
                 <img src="assets/graphics/misc/stars.gif"
@@ -120,7 +113,7 @@
 
                         <div class="tooltip-container">
                             <img src="assets/art/Gyaru-Eye-(Aug-23-2026).png" style="image-rendering: pixelated;">
-                            <span class="tooltip-text">Gyaruo</span>
+                            <span class="tooltip-text">Gyaru</span>
                         </div>
 
                         <div class="tooltip-container">
@@ -135,8 +128,21 @@
                     style="filter: drop-shadow(-1px 1px white) drop-shadow(-4px 4px rgba(137, 43, 226, 0.8)); margin: -50px -10px -20px; pointer-events: none;">
             </div>
 
+            <div class="flex" style="justify-content: space-around; gap: 15px; margin-top: 15px; padding-top: 10px;;">
+                <div class="window" style="flex: 1; margin: 0; padding: 10px; text-align: center;">
+                    <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: var(--pink);">🎮 Playing</div>
+                    <div id="media-playing-display" style="font-size: 13px;">Loading...</div>
+                </div>
+                <div class="window" style="flex: 1; margin: 0; padding: 10px; text-align: center;">
+                    <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: var(--blue);">📺 Watching</div>
+                    <div id="media-watching-display" style="font-size: 13px;">Loading...</div>
+                </div>
+                <div class="window" style="flex: 1; margin: 0; padding: 10px; text-align: center;">
+                    <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px; color: var(--green);">📖 Reading</div>
+                    <div id="media-reading-display" style="font-size: 13px;">Loading...</div>
+                </div>
+            </div>
         </div>
-
     </div>
 
     <div id="right-container" class="flex column">
@@ -192,7 +198,6 @@
                 scrolling="auto"></iframe>
         </div>
     </div>
-
 
     <script src="script.js"></script>
 </body>
