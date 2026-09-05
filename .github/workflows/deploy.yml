@@ -9,11 +9,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Deploy to Neocities
-      uses: neocities/deploy-action@v1
+      uses: bcomnes/deploy-to-neocities@v3
       with:
-        api_token: ${{ secrets.NEOCITIES_TOKEN }}
-        dist_dir: public  # Remove or adjust this line if your site files are in the root directory
+        api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+        dist_dir: public  
         cleanup: true
