@@ -114,20 +114,21 @@ blockquote {
 }
 
 #left-container,
-#right-container,
-#center-container {
+#right-container {
+    flex: 1;
     overflow: hidden;
     max-height: 100%;
 }
 
-#left-container,
-#right-container {
-    flex: 1;
-}
-
 #center-container {
     flex: 3;
+    overflow: hidden;
+    max-height: 100%;
     gap: 25px;
+}
+
+#center-container .window {
+    overflow: auto;
 }
 
 .app {
